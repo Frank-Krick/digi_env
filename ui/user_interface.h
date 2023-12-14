@@ -12,7 +12,10 @@
 namespace ui {
     class UserInterface {
         public:
-            UserInterface(daisy::DaisyPatch & hardware): _model(), _controller(_model), _view(hardware, _model, _controller) {}
+            UserInterface(daisy::DaisyPatch & hardware):
+                _model(),
+                _controller(_model),
+                _view(hardware, _model, _controller) {}
 
             void processInput() { _view.processInput(); }
             void paint() { _view.paint(); }
