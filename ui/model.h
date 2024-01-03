@@ -11,12 +11,12 @@ namespace ui {
             Model():
                 _selectedEnvelope(0),
                 _envelopes{
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0), 
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0), 
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0), 
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0), 
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0), 
-                    models::EnvelopeModel(10, 10, 10, 10, 1.0)} {}
+                    models::EnvelopeModel(), 
+                    models::EnvelopeModel(), 
+                    models::EnvelopeModel(), 
+                    models::EnvelopeModel(), 
+                    models::EnvelopeModel(), 
+                    models::EnvelopeModel()} {}
 
             void setSelectedEnvelopeIndex(unsigned int envelopeId) {
                 _selectedEnvelope = envelopeId;
@@ -26,7 +26,13 @@ namespace ui {
                 return _selectedEnvelope;
             }
 
-            const models::EnvelopeModel & getSelectedEnvelope() const { return _envelopes[_selectedEnvelope]; }
+            const models::EnvelopeModel & getSelectedEnvelope() const {
+                return _envelopes[_selectedEnvelope];
+            }
+
+            const models::EnvelopeModel & getSelectedEnvelope() {
+                return _envelopes[_selectedEnvelope];
+            }
 
         private:
             unsigned int _selectedEnvelope;
