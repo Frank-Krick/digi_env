@@ -24,6 +24,7 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 int main(void)
 {
 	hardware.Init();
+	
 	hardware.SetAudioBlockSize(4);
 	hardware.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hardware.StartAdc();
