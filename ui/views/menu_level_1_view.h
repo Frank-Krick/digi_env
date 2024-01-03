@@ -33,7 +33,7 @@ namespace ui::views {
                 _controller(controller),
                 _hardware(hardware),
                 _envelopeSetupView(hardware),
-                _envelopeView(hardware, model),
+                _envelopeView(hardware, model, controller),
                 _curveView(hardware),
                 _rangeView(hardware),
                 _effectsView(hardware),
@@ -51,6 +51,16 @@ namespace ui::views {
                     }
                 } else if (_hardware.encoder.Increment() == 1) {
                     _activeView = (Level1ViewTypes)((_activeView + 1) % max_view_types);
+                } else {
+                    switch (_activeView)
+                    {
+                    case EnvelopeViewType:
+                        _envelopeView.processInput();
+                        break;
+                    
+                    default:
+                        break;
+                    }
                 }
             }
 

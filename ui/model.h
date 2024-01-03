@@ -30,8 +30,12 @@ namespace ui {
                 return _envelopes[_selectedEnvelope];
             }
 
-            const models::EnvelopeModel & getSelectedEnvelope() {
+            models::EnvelopeModel & getSelectedEnvelope() {
                 return _envelopes[_selectedEnvelope];
+            }
+
+            void setSelectedEnvelopeAttackInMs(unsigned int attackInMs) {
+                _envelopes[_selectedEnvelope].setAttackInMs(attackInMs);
             }
 
         private:

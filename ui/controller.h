@@ -12,6 +12,14 @@ namespace ui {
                 _model.setSelectedEnvelopeIndex(envelopeId);
             }
 
+            void setEnvelopeAttackInMs(unsigned int attackMs) {
+                _model.getSelectedEnvelope().setAttackInMs(attackMs);
+            }
+
+            void setEnvelopeReleaseInMs(unsigned int releaseMs) {
+                _model.getSelectedEnvelope().setReleaseInMs(releaseMs);
+            };
+
         private:
             Model & _model;
     };

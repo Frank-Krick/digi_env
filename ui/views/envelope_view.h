@@ -6,6 +6,7 @@
 #include <daisy_patch.h>
 
 #include "../model.h"
+#include "../controller.h"
 
 namespace ui::views {
     constexpr unsigned int quarter_screen_width = 128 / 4;
@@ -13,9 +14,10 @@ namespace ui::views {
 
     class EnvelopeView {
         public:
-            EnvelopeView(daisy::DaisyPatch & hardware, const Model & model):
+            EnvelopeView(daisy::DaisyPatch & hardware, const Model & model, Controller & controller):
                 _hardware(hardware),
-                _model(model) {}
+                _model(model),
+                _controller(controller) {}
 
             void paint() {
                 _drawHeader();
@@ -27,11 +29,17 @@ namespace ui::views {
             }
 
             void processInput() {
+                auto attackControlValue = _hardware.controls[0].Value();
+                _controller.setEnvelopeAttackInMs(attackControlValue * 1000);
+
+                auto releaseControlValue = _hardware.controls[1].Value();
+                _controller.setEnvelopeReleaseInMs(releaseControlValue * 1000);
             }
 
         private:
             daisy::DaisyPatch & _hardware;
             const Model & _model;
+            Controller & _controller;
 
             void _drawHeader()
             {

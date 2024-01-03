@@ -12,6 +12,7 @@ ui::UserInterface userInterface(hardware);
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t size)
 {
+	userInterface.processInput();
 	for (size_t i = 0; i < size; i++)
 	{
 		out[0][i] = in[0][i];
@@ -25,14 +26,11 @@ int main(void)
 {
 	hardware.Init();
 	
-	hardware.SetAudioBlockSize(4);
-	hardware.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 	hardware.StartAdc();
 	hardware.StartAudio(AudioCallback);
 
     for(;;)
     {
-		userInterface.processInput();
 		userInterface.paint();
 		hardware.DelayMs(1);
     }
