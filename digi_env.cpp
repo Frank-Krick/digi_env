@@ -11,7 +11,7 @@ using namespace ui;
 
 DaisyPatch            hardware;
 ui::UserInterface     userInterface(hardware);
-processing::Processor processor(userInterface.getModel());
+processing::Processor processor(userInterface.getModel(), hardware);
 
 void AudioCallback(AudioHandle::InputBuffer  in,
                    AudioHandle::OutputBuffer out,
@@ -41,6 +41,8 @@ int main(void)
     {
         userInterface.processInput();
         userInterface.paint();
+		processor.outputCv();
+
         hardware.DelayMs(1);
     }
 }

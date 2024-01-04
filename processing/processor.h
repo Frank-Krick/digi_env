@@ -15,7 +15,7 @@ namespace processing
 class Processor
 {
   public:
-    Processor(const ui::Model &model)
+    Processor(const ui::Model &model, daisy::DaisyPatch &hardware)
     : _model(model),
       _sampleRate(0),
       _envelopes{Envelope(model, 0, 0),
@@ -23,7 +23,8 @@ class Processor
                  Envelope(model, 0, 2),
                  Envelope(model, 0, 3),
                  Envelope(model, 0, 4),
-                 Envelope(model, 0, 5)}
+                 Envelope(model, 0, 5)},
+      _hardware(hardware)
     {
     }
 
@@ -62,7 +63,13 @@ class Processor
         }
     }
 
-    void outputCv() {}
+    void outputCv()
+    {
+        _hardware.seed.dac.WriteValue(daisy::DacHandle::Channel::ONE,
+                                      _envelopes[0].getValue() * 4095);
+        _hardware.seed.dac.WriteValue(daisy::DacHandle::Channel::TWO,
+                                      _envelopes[1].getValue() * 4095);
+    }
 
     void setSampleRate(unsigned int sampleRate)
     {
@@ -77,6 +84,7 @@ class Processor
     const ui::Model        &_model;
     unsigned int            _sampleRate;
     std::array<Envelope, 6> _envelopes;
+    daisy::DaisyPatch      &_hardware;
 };
 } // namespace processing
 
