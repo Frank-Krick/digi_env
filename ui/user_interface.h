@@ -20,6 +20,8 @@ namespace ui {
             void processInput() { _view.processInput(); }
             void paint() { _view.paint(); }
 
+            const Model & getModel() const { return _model; }
+
         private:
             Model _model;
             Controller _controller;

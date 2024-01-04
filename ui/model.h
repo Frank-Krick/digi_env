@@ -38,6 +38,10 @@ namespace ui {
                 _envelopes[_selectedEnvelope].setAttackInMs(attackInMs);
             }
 
+            const models::EnvelopeModel getEnvelopeByIndex(unsigned int index) const {
+                return _envelopes[index];
+            }
+
         private:
             unsigned int _selectedEnvelope;
             std::array<models::EnvelopeModel, 6> _envelopes;

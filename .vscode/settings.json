@@ -2,5 +2,8 @@
     "files.associations": {
         "cmath": "cpp",
         "array": "cpp"
+    },
+    "vim.handleKeys": {
+        "<C-p>": false
     }
 }
