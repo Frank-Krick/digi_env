@@ -34,7 +34,7 @@ namespace ui::views {
                 _hardware(hardware),
                 _envelopeSetupView(hardware),
                 _envelopeView(hardware, model, controller),
-                _curveView(hardware),
+                _curveView(hardware, model, controller),
                 _rangeView(hardware),
                 _effectsView(hardware),
                 _outputView(hardware),
@@ -58,6 +58,10 @@ namespace ui::views {
                         _envelopeView.processInput();
                         break;
                     
+                    case CurveViewType:
+                        _curveView.processInput();
+                        break;
+
                     default:
                         break;
                     }

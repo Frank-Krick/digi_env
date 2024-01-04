@@ -1,6 +1,8 @@
 #ifndef __PROCESSING__ENVELOPE__
 #define __PROCESSING__ENVELOPE__
 
+#include "cmath"
+
 #include "../ui/model.h"
 
 namespace processing
@@ -29,9 +31,10 @@ class Envelope
         auto envelopeParameter = _model.getEnvelopeByIndex(_index);
         if(_triggered)
         {
-            _triggered = false;
-            _value     = 0.0f;
-            _phase     = Attack;
+            _triggered               = false;
+            _value                   = 0.0f;
+            _phase                   = Attack;
+            _samplesSinceAttackStart = 0.0f;
         }
         else
         {
@@ -59,14 +62,33 @@ class Envelope
     bool             _triggered;
     EnvelopePhase    _phase;
     float            _value;
+    float            _samplesSinceAttackStart;
 
     void _attackPhase(ui::models::EnvelopeModel &envelopeParameter)
     {
+        _samplesSinceAttackStart += 1;
+
         float attackTimeInSamples
             = (float)_sampleRate
               * ((float)envelopeParameter.getAttackInMs() / 1000.0f);
 
-        _value += 1.0f / attackTimeInSamples;
+        switch(envelopeParameter.getCurveType())
+        {
+            case ui::models::CurveType::Linear:
+                _value += 1.0f / attackTimeInSamples;
+                break;
+
+            case ui::models::CurveType::Exponential:
+                _value = (exp(_samplesSinceAttackStart / attackTimeInSamples) - 1.0f) / exp(1.0f);
+                break;
+
+            case ui::models::CurveType::Logarithmic:
+                _value = (log((_samplesSinceAttackStart / attackTimeInSamples) * exp(1.0f)) + 3.0f) / 4.0f;
+                break;
+
+            default: break;
+        }
+
         if(_value > 1.0f)
         {
             _value = 1.0f;

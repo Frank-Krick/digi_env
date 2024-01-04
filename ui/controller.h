@@ -20,6 +20,10 @@ namespace ui {
                 _model.getSelectedEnvelope().setReleaseInMs(releaseMs);
             };
 
+            void setEnvelopeCurveType(ui::models::CurveType curveType) {
+                _model.getSelectedEnvelope().setCurveType(curveType);
+            }
+
         private:
             Model & _model;
     };
